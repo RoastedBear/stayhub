@@ -15,4 +15,7 @@ public interface ReviewImageRepository extends JpaRepository<ReviewImage, Long> 
 
     // 리뷰 이미지 전체 삭제 (리뷰 삭제 시)
     void deleteByReviewId(Long reviewId);
+
+    // 여러 리뷰의 이미지를 한 번에 조회 (N+1 방지)
+    List<ReviewImage> findByReviewIdInOrderBySortOrderAsc(List<Long> reviewIds);
 }

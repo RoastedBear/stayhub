@@ -29,4 +29,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     // 게스트가 작성한 리뷰 목록
     Page<Review> findByGuestIdOrderByCreatedAtDesc(Long guestId, Pageable pageable);
+
+    // 숙소 리뷰 수
+    long countByAccommodationId(Long accommodationId);
 }
