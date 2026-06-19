@@ -25,3 +25,9 @@ jwt:
   secret: ${JWT_SECRET:c3RheWh1Yi1qd3Qtc2VjcmV0LWtleS1tdXN0LWJlLWF0LWxlYXN0LTI1Ni1iaXRzLWxvbmctZm9yLUhNQUMtU0hBMjU2IQ==}
   access-token-expiry: 3600000      # 1시간 (ms)
   refresh-token-expiry: 1209600000  # 14일 (ms)
+
+toss:
+  payments:
+    # 운영 환경에서는 환경변수 TOSS_SECRET_KEY로 반드시 교체할 것
+    secret-key: ${TOSS_SECRET_KEY:test_sk_dummy1234567890abcdefghijklmnop}
+    base-url: https://api.tosspayments.com
