@@ -39,6 +39,12 @@ out/
 ### Claude Code ###
 .claude/settings.local.json
 
+### Frontend ###
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.*.local
+
 ### Logs ###
 *.log
 *.log.err
