@@ -47,6 +47,13 @@ public enum ErrorCode {
     PAYMENT_NOT_CANCELLABLE(HttpStatus.BAD_REQUEST, "취소할 수 없는 결제 상태입니다."),
     TOSS_API_ERROR(HttpStatus.BAD_GATEWAY, "Toss Payments API 오류가 발생했습니다."),
 
+    // === 이미지 ===
+    INVALID_FILE(HttpStatus.BAD_REQUEST, "파일이 올바르지 않습니다."),
+    FILE_TOO_LARGE(HttpStatus.BAD_REQUEST, "파일 크기는 10MB를 초과할 수 없습니다."),
+    INVALID_FILE_TYPE(HttpStatus.BAD_REQUEST, "이미지 파일만 업로드할 수 있습니다. (jpg, png, gif, webp)"),
+    IMAGE_NOT_FOUND(HttpStatus.NOT_FOUND, "이미지를 찾을 수 없습니다."),
+    S3_UPLOAD_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다."),
+
     // === 리뷰 ===
     REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "리뷰를 찾을 수 없습니다."),
     REVIEW_ALREADY_EXISTS(HttpStatus.CONFLICT, "이미 리뷰를 작성하였습니다."),

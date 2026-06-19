@@ -26,6 +26,22 @@ jwt:
   access-token-expiry: 3600000      # 1시간 (ms)
   refresh-token-expiry: 1209600000  # 14일 (ms)
 
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+
+cloud:
+  aws:
+    s3:
+      bucket: ${S3_BUCKET:stayhub}
+      endpoint: ${S3_ENDPOINT:http://localhost:4566}
+      region: ${AWS_REGION:us-east-1}
+    credentials:
+      access-key: ${AWS_ACCESS_KEY:test}
+      secret-key: ${AWS_SECRET_KEY:test}
+
 toss:
   payments:
     # 운영 환경에서는 환경변수 TOSS_SECRET_KEY로 반드시 교체할 것
