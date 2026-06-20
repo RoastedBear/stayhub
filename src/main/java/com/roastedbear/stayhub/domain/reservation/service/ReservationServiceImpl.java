@@ -143,7 +143,7 @@ public class ReservationServiceImpl implements ReservationService {
         if (!request.getCheckInDate().isBefore(request.getCheckOutDate())) {
             throw new IllegalArgumentException("체크아웃 날짜는 체크인 날짜 이후여야 합니다.");
         }
-        if (request.getCheckInDate().isBefore(java.time.LocalDate.now())) {
+        if (request.getCheckInDate().isBefore(java.time.LocalDate.now(java.time.ZoneId.of("Asia/Seoul")))) {
             throw new IllegalArgumentException("체크인 날짜는 오늘 이후여야 합니다.");
         }
     }

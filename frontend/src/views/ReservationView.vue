@@ -46,7 +46,7 @@ import { paymentApi } from '@/api/payment.js'
 
 const route = useRoute()
 const router = useRouter()
-const today = new Date().toISOString().split('T')[0]
+const today = new Date().toLocaleDateString('en-CA')
 
 const roomId = Number(route.query.roomId)
 const basePrice = Number(route.query.basePrice) || 0
@@ -67,6 +67,8 @@ async function handleReserve() {
   if (nights.value <= 0) { error.value = '날짜를 올바르게 선택해주세요.'; return }
   error.value = ''
   loading.value = true
+
+  let reservationId = null
   try {
     // 1. 예약 생성
     const resRes = await reservationApi.create({
@@ -75,13 +77,13 @@ async function handleReserve() {
       checkOutDate: form.value.checkOutDate,
       guestCount: form.value.guestCount
     })
-    const reservationId = resRes.data.id
+    reservationId = resRes.data.id
 
     // 2. 결제 준비 (orderId, amount 발급)
     const prepareRes = await paymentApi.prepare(reservationId)
     const { orderId, orderName, amount } = prepareRes.data
 
-    // 3. Toss 결제 위젯 호출
+    // 3. Toss 결제 위젯 호출 (성공 시 successUrl로 리다이렉트)
     const toss = window.TossPayments(import.meta.env.VITE_TOSS_CLIENT_KEY || 'test_ck_dummy')
     await toss.requestPayment('카드', {
       amount,
@@ -91,12 +93,13 @@ async function handleReserve() {
       failUrl: `${window.location.origin}/payment/fail`
     })
   } catch (e) {
-    if (e.code) {
-      // Toss SDK 에러 (사용자가 창을 닫은 경우 등)
-      error.value = e.message || '결제가 취소되었습니다.'
-    } else {
-      error.value = e.response?.data?.message ?? '예약 처리 중 오류가 발생했습니다.'
+    // 결제 진행 중 에러 발생 시 생성된 예약을 자동 취소
+    if (reservationId) {
+      await reservationApi.cancel(reservationId).catch(() => {})
     }
+    error.value = e.code
+      ? (e.message || '결제가 취소되었습니다.')
+      : (e.response?.data?.message ?? '예약 처리 중 오류가 발생했습니다.')
     loading.value = false
   }
 }

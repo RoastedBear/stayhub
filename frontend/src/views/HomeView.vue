@@ -75,7 +75,7 @@ import { ref, computed } from 'vue'
 import { accommodationApi } from '@/api/accommodation.js'
 import { SIDO_LIST, getSigunguList } from '@/data/regions.js'
 
-const today = new Date().toISOString().split('T')[0]
+const today = new Date().toLocaleDateString('en-CA')
 
 const params = ref({ sido: '', sigungu: '', checkInDate: '', checkOutDate: '', guestCount: null })
 const rooms = ref([])

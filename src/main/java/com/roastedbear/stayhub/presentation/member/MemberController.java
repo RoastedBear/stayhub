@@ -71,6 +71,9 @@ public class MemberController {
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(
             @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         memberService.logout(userDetails.getMemberId());
         return ResponseEntity.noContent().build();
     }
