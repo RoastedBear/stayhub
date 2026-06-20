@@ -13,7 +13,7 @@ export const accommodationApi = {
   delete: (id) => api.delete(`/accommodations/${id}`),
 
   // 객실 관리
-  createRoom: (accommodationId, data) => api.post(`/rooms`, { ...data, accommodationId }),
+  createRoom: (accommodationId, data) => api.post(`/accommodations/${accommodationId}/rooms`, data),
   updateRoom: (roomId, data) => api.put(`/rooms/${roomId}`, data),
   deleteRoom: (roomId) => api.delete(`/rooms/${roomId}`),
 

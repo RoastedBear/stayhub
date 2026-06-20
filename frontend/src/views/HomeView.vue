@@ -6,11 +6,17 @@
       <form @submit.prevent="search" class="search-form">
         <div class="form-group">
           <label class="form-label">지역 (시/도)</label>
-          <input v-model="params.sido" type="text" placeholder="서울, 부산..." />
+          <select v-model="params.sido" @change="params.sigungu = ''">
+            <option value="">전체</option>
+            <option v-for="sido in SIDO_LIST" :key="sido" :value="sido">{{ sido }}</option>
+          </select>
         </div>
         <div class="form-group">
           <label class="form-label">시/군/구</label>
-          <input v-model="params.sigungu" type="text" placeholder="강남구..." />
+          <select v-model="params.sigungu" :disabled="!params.sido">
+            <option value="">전체</option>
+            <option v-for="sigungu in sigunguList" :key="sigungu" :value="sigungu">{{ sigungu }}</option>
+          </select>
         </div>
         <div class="form-group">
           <label class="form-label">체크인</label>
@@ -65,8 +71,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { accommodationApi } from '@/api/accommodation.js'
+import { SIDO_LIST, getSigunguList } from '@/data/regions.js'
 
 const today = new Date().toISOString().split('T')[0]
 
@@ -76,6 +83,8 @@ const loading = ref(false)
 const searched = ref(false)
 const page = ref(0)
 const totalPages = ref(0)
+
+const sigunguList = computed(() => getSigunguList(params.value.sido))
 
 async function search(p = 0) {
   loading.value = true

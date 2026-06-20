@@ -33,11 +33,17 @@
         <div class="addr-row mb-4">
           <div class="form-group">
             <label class="form-label">시/도 *</label>
-            <input v-model="form.sido" type="text" placeholder="서울특별시" required />
+            <select v-model="form.sido" required @change="form.sigungu = ''">
+              <option value="">선택해주세요</option>
+              <option v-for="sido in SIDO_LIST" :key="sido" :value="sido">{{ sido }}</option>
+            </select>
           </div>
           <div class="form-group">
             <label class="form-label">시/군/구 *</label>
-            <input v-model="form.sigungu" type="text" placeholder="강남구" required />
+            <select v-model="form.sigungu" required :disabled="!form.sido">
+              <option value="">{{ form.sido ? '선택해주세요' : '시/도 먼저 선택' }}</option>
+              <option v-for="sigungu in sigunguList" :key="sigungu" :value="sigungu">{{ sigungu }}</option>
+            </select>
           </div>
         </div>
 
@@ -74,6 +80,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { accommodationApi } from '@/api/accommodation.js'
+import { SIDO_LIST, getSigunguList } from '@/data/regions.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -89,7 +96,8 @@ const form = ref({
 const error = ref('')
 const loading = ref(false)
 
-// 수정 모드: 기존 데이터 로드
+const sigunguList = computed(() => getSigunguList(form.value.sido))
+
 onMounted(async () => {
   if (isEdit.value) {
     try {
