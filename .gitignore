@@ -42,9 +42,20 @@ out/
 ### Frontend ###
 frontend/node_modules/
 frontend/dist/
+frontend/.env
 frontend/.env.local
 frontend/.env.*.local
+
+### Frontend - 검증용 임시 파일 ###
+frontend/verify.mjs
+frontend/test_token.txt
+frontend/ss_*.png
+frontend/frontend.log
 
 ### Logs ###
 *.log
 *.log.err
+
+### OS ###
+.DS_Store
+Thumbs.db
