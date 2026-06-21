@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * 회원 인증 API 컨트롤러
  * - 모든 경로는 SecurityConfig에서 인증 없이 허용 (단, /logout은 인증 필요)
@@ -25,6 +27,17 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
+
+    /**
+     * 이메일 중복 확인
+     * GET /api/auth/check-email?email={email}
+     */
+    @Operation(summary = "이메일 중복 확인", description = "available: true = 사용 가능, false = 이미 사용 중")
+    @GetMapping("/check-email")
+    public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestParam String email) {
+        boolean available = memberService.isEmailAvailable(email);
+        return ResponseEntity.ok(Map.of("available", available));
+    }
 
     /**
      * 회원가입

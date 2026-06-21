@@ -138,6 +138,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     /**
+     * 이메일 중복 확인
+     */
+    @Override
+    public boolean isEmailAvailable(String email) {
+        return !memberRepository.existsByEmail(email);
+    }
+
+    /**
      * 로그아웃
      * - Redis에서 Refresh Token 삭제
      */

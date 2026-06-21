@@ -34,6 +34,12 @@ public interface MemberService {
     TokenResponse reissue(String refreshToken);
 
     /**
+     * 이메일 중복 확인
+     * - true: 사용 가능, false: 이미 사용 중
+     */
+    boolean isEmailAvailable(String email);
+
+    /**
      * 로그아웃
      * - Redis에서 Refresh Token 삭제
      */
