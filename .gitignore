@@ -52,6 +52,9 @@ frontend/test_token.txt
 frontend/ss_*.png
 frontend/frontend.log
 
+### 로컬 환경 설정 (시크릿 키 포함) ###
+src/main/resources/application-local.yaml
+
 ### Logs ###
 *.log
 *.log.err
