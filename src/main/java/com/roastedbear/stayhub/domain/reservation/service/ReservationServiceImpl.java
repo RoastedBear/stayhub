@@ -66,6 +66,11 @@ public class ReservationServiceImpl implements ReservationService {
             Room room = roomRepository.findById(request.getRoomId())
                     .orElseThrow(() -> new BusinessException(ErrorCode.ROOM_NOT_FOUND));
 
+            // 본인 숙소 예약 불가
+            if (room.getAccommodation().getHost().getId().equals(guestId)) {
+                throw new BusinessException(ErrorCode.CANNOT_RESERVE_OWN_ACCOMMODATION);
+            }
+
             // 객실 예약 가능 상태 확인
             if (room.getStatus() != RoomStatus.AVAILABLE) {
                 throw new BusinessException(ErrorCode.ROOM_NOT_AVAILABLE);

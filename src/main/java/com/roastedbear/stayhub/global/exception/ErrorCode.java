@@ -39,6 +39,7 @@ public enum ErrorCode {
     RESERVATION_NOT_FOUND(HttpStatus.NOT_FOUND, "예약을 찾을 수 없습니다."),
     ROOM_NOT_AVAILABLE(HttpStatus.CONFLICT, "선택한 날짜에 예약이 불가능한 객실입니다."),
     RESERVATION_NOT_CANCELLABLE(HttpStatus.BAD_REQUEST, "취소할 수 없는 예약 상태입니다."),
+    CANNOT_RESERVE_OWN_ACCOMMODATION(HttpStatus.FORBIDDEN, "본인 숙소는 예약할 수 없습니다."),
 
     // === 결제 ===
     PAYMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "결제 정보를 찾을 수 없습니다."),
